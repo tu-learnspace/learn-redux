@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchCount } from './counterAPI';
 
+// initialState ko nên có các non-deserialize như function, promise v.v
 const initialState = {
   value: 0,
   status: 'idle',
@@ -21,9 +22,12 @@ export const incrementAsync = createAsyncThunk(
 );
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: 'counter', // tên của các action sẽ là counter/increment, counter/decrease v.v
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
+  // reducer: thay đổi state dựa vào action truyền vào
+  // slice sẽ tự tạo action creator tương ứng với tên reducer
+  // tức là mình chỉ cần dispatch action, redux toolkit sẽ vào đây xem reducer nào tương ứng mà thực hiện
   reducers: {
     increment: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -54,7 +58,9 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+// xài: increment(), increment().type, increment().action
+// xài: dispatch action đc trả ra: useDispatch((increment())
+export const { increment, decrement, incrementByAmount } = counterSlice.actions; // actions: các action creator
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
